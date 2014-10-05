@@ -1,3 +1,7 @@
+/**
+ * I like solution 2 better as it's simpler
+ */
+
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode *root) {
