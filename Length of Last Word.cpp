@@ -1,3 +1,7 @@
+/**
+ * It would be easier to count from the end; 
+ */
+
 class Solution {
 public:
     int lengthOfLastWord(const char *s) {
