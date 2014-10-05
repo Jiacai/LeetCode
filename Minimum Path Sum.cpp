@@ -1,3 +1,7 @@
+/**
+ * Annie's solution is one dimentional 
+ */
+
 class Solution {
 public:
     int minPathSum(vector<vector<int> > &grid) {
@@ -22,5 +26,23 @@ public:
             }
         }
         return dp[m-1][n-1];
+    }
+
+    int minPathSum_1(vector<vector<int> > &grid) {
+        if (grid.empty()) return INT_MIN;
+        int M = grid.size(), N = grid[0].size();
+        int dp[N];
+        dp[0] = grid[0][0];
+        for (int i = 1; i < N; ++i)
+            dp[i] = grid[0][i] + dp[i-1];
+        
+        for (int i = 1; i < M; ++i)
+        {
+            dp[0] += grid[i][0];
+            for (int j = 1; j < N; ++j)
+                dp[j] = min(dp[j-1], dp[j]) + grid[i][j];
+        }
+        
+        return dp[N-1];
     }
 };
