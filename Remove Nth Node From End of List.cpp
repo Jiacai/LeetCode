@@ -1,3 +1,7 @@
+/**
+ * need to delete the to-be-deleted node
+ */
+ 
 class Solution {
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n) {
@@ -15,6 +19,7 @@ public:
             cur = cur->next;
         }
         prev->next = cur->next;
+        delete cur;
         ListNode* result = dummy->next;
         delete dummy;
         return result;
