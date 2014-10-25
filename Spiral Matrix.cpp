@@ -30,4 +30,23 @@ public:
         }
         return result;
     }
+    
+    vector<int> spiralOrder_1(vector<vector<int> > &matrix) {
+        vector<int> res;
+        if (matrix.empty() || matrix[0].empty()) return res;
+        int imin = 0, imax = matrix.size()-1;
+        int jmin = 0, jmax = matrix[0].size()-1;
+        while (true)
+        {
+            for (int j = jmin; j <= jmax; ++j) res.push_back(matrix[imin][j]);
+            if (++imin > imax) break;
+            for (int i = imin; i <= imax; ++i) res.push_back(matrix[i][jmax]);
+            if (jmin > --jmax) break;
+            for (int j = jmax; j >= jmin; --j) res.push_back(matrix[imax][j]);
+            if (imin > --imax) break;
+            for (int i = imax; i >= imin; --i) res.push_back(matrix[i][jmin]);
+            if (++jmin > jmax) break;
+        }
+        return res;
+    }
 };
