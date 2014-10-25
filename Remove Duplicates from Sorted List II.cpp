@@ -1,42 +1,32 @@
 class Solution {
 public:
     ListNode *deleteDuplicates(ListNode *head) {
-        ListNode* dummy = new ListNode(-1);
+        ListNode *dummy = new ListNode(0);
         dummy->next = head;
-        ListNode* pPrePre = dummy;
-        if (pPrePre == NULL) return dummy->next;
-        ListNode* pPre = pPrePre->next;
-        if (pPre == NULL) return dummy->next;
-        ListNode* pCur = pPre->next;
-        if (pCur == NULL) return dummy->next;
-        while (!(pPrePre == NULL || pPre == NULL || pCur == NULL) )// not end
-        {
-            bool eq = false;
-            while (pCur != NULL && pPre->val == pCur->val)
-            {
-                eq = true;
-                pPre->next = pCur->next;
-                pCur = pCur->next;
+        ListNode *prev = dummy;
+        ListNode *cur = head;
+        while (cur != NULL) {
+            ListNode *next = cur->next;
+            bool dup = false;
+            while (next != NULL && next->val == cur->val) {
+                dup = true;
+                ListNode *tmp = next;
+                next = next->next;
+                cur->next = next;
+                delete tmp;
             }
-            if (eq)
-            {
-                pPrePre->next = pCur;
-                pPre = pCur;
-                if (pCur != NULL)
-                {
-                    pCur = pCur->next;
-                }
-            }
-            else
-            {
-                pPrePre = pPre;
-                pPre = pCur;
-                if (pCur != NULL)
-                {
-                    pCur = pCur->next;
-                }
+            if (dup) {
+                ListNode *tmp = cur;
+                prev->next = next;
+                cur = next;
+                delete tmp;
+            } else {
+                prev = cur;
+                cur = next;
             }
         }
-        return dummy->next;
+        ListNode *newHead = dummy->next;
+        delete dummy;
+        return newHead;
     }
 };
