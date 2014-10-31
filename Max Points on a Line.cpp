@@ -32,4 +32,33 @@ public:
         }
         return ans;
     }
+    
+    int maxPoints_1(vector<Point> &points) {
+        int size = points.size();
+        int res = 0;
+        for (int i = 0; i < size; i++) {
+            unordered_map<double, int> count;
+            int base = 0;
+            int zero_cnt = 0;
+            int local_max = 0;
+            for (int j = 0; j < size; j++) {
+                if (points[i].x == points[j].x && 
+                    points[i].y == points[j].y) {
+                    base++;
+                    continue;
+                }
+                if (points[i].y == points[j].y) {
+                    zero_cnt++;
+                    local_max = max(zero_cnt, local_max);
+                    continue;
+                }
+                double k = 1.0 * (points[i].x - points[j].x) 
+                            / (points[i].y - points[j].y);
+                count[k] += 1;
+                local_max = max(count[k], local_max);
+            }
+            res = max(local_max + base, res);
+        }
+        return res;
+    }
 };
