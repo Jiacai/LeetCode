@@ -1,3 +1,4 @@
+// rolling hash
 typedef long long llong;
 
 class Solution {
