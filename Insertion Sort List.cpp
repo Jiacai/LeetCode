@@ -28,4 +28,29 @@ public:
         }
         return n_dummy->next;
     }
+    
+    ListNode *insertionSortList_1(ListNode *head) {
+        ListNode oldDummy(0);
+        oldDummy.next = head;
+        ListNode newDummy(0);
+        while(true) {
+            ListNode *prev = &oldDummy;
+            ListNode *node = oldDummy.next;
+            if (node == NULL) break;
+            ListNode *maxNode = NULL;
+            ListNode *maxPrev = NULL;
+            while (node != NULL) {
+                if (maxNode == NULL || node->val > maxNode->val) {
+                    maxNode = node;
+                    maxPrev = prev;
+                }
+                prev = node;
+                node = node->next;
+            }
+            maxPrev->next = maxNode->next;
+            maxNode->next = newDummy.next;
+            newDummy.next = maxNode;
+        }
+        return newDummy.next;
+    }
 };
