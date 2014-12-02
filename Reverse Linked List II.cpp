@@ -1,40 +1,25 @@
 class Solution {
 public:
     ListNode *reverseBetween(ListNode *head, int m, int n) {
-        ListNode* current = head;
-        ListNode* last = NULL;
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode *prev = &dummy;
+        ListNode *node = head;
         int i = 1;
-        while (i != m && current != NULL)
-        {
-            last = current;
-            current = current->next;
-            i++;
+        for (; i < m; i++) {
+            prev = prev->next;
+            node = node->next;
         }
-        ListNode* start1 = last;
-        ListNode* start2 = current;
-        last = current;
-        current = current->next;
-        i++;
-        while (i != n+1 && current != NULL)
-        {
-            ListNode* tmp = current->next;
-            current->next = last;
-            last = current;
-            current = tmp;
-            i++;
+        ListNode *tail = node;
+        ListNode *next = node->next;
+        for (; i < n; i++) {
+            ListNode *tmp = next->next;
+            next->next = node;
+            prev->next = next;
+            tail->next = tmp;
+            node = next;
+            next = tmp;
         }
-        if (start1 != NULL)
-        {
-            start1->next = last;
-        }
-        else
-        {
-            head = last;
-        }
-        if (start2 != NULL)
-        {
-            start2->next = current;
-        }
-        return head;
+        return dummy.next;
     }
 };
