@@ -1,25 +1,34 @@
 class Solution {
 public:
     TreeNode *sortedListToBST(ListNode *head) {
+        ListNode *next = NULL;
+        int len = getLength(head);
+        return sortedListToBSTRe(head, len, next);
+    }
+    
+    int getLength(ListNode *node) {
         int len = 0;
-        ListNode * node = head;
-        while (node != NULL)
-        {
+        while (node != NULL) {
             node = node->next;
             len++;
         }
-        return buildTree(head, 0, len-1);
+        return len;
     }
-     
-    TreeNode *buildTree(ListNode *&node, int start, int end)
-    {
-        if (start > end) return NULL;
-        int mid = start + (end - start) / 2;
-        TreeNode *left = buildTree(node, start, mid-1);
-        TreeNode *root = new TreeNode(node->val);
+    
+    TreeNode *sortedListToBSTRe(ListNode *head, int len, ListNode *&next) {
+        if (len == 0) {
+            next = head;
+            return NULL;
+        }
+        int mid = len / 2;
+        ListNode *leftNext = NULL;
+        TreeNode *left = sortedListToBSTRe(head, mid, leftNext);
+        TreeNode *root = new TreeNode(leftNext->val);
+        ListNode *rightNext = NULL;
+        TreeNode *right = sortedListToBSTRe(leftNext->next, len - mid - 1, rightNext);
         root->left = left;
-        node = node->next;
-        root->right = buildTree(node, mid+1, end);
+        root->right = right;
+        next = rightNext;
         return root;
     }
 };
