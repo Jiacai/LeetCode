@@ -1,3 +1,6 @@
+/*
+This solution is a little better than Annie's one. It uses a sliding window for optimization.
+*/
 class Solution {
 public:
     vector<int> findSubstring(string S, vector<string> &L) {
