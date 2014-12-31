@@ -9,57 +9,35 @@ typedef long long llong;
 
 class Solution {
 public:
-    string fractionToDecimal(int numeratorInt, int denominatorInt) {
-        llong numerator = numeratorInt;
-        llong denominator = denominatorInt;
-        bool positive = (numerator >= 0 && denominator > 0) ||
-                        (numerator <= 0 && denominator < 0);
-        if (numerator < 0) {
-            numerator = -numerator;
+    string fractionToDecimal(int numerator, int denominator) {
+        if (numerator == 0) {
+            return "0";
         }
-        if (denominator < 0) {
-            denominator = -denominator;
-        }
-        llong integer = numerator / denominator;
-        llong remain = numerator % denominator;
-        vector<llong> remains;
-        vector<llong> decimals;
-        while (remain != 0 && find(remains.begin(), remains.end(), remain) == remains.end()) {
-            remains.push_back(remain);
-            remain *= 10;
-            decimals.push_back(remain / denominator);
-            remain %= denominator;
-        }
-        stringstream ss;
-        if (!positive) {
-            ss << '-';
-        }
-        ss << integer;
-        if (decimals.size() == 0) {
-            return ss.str();
-        } else if (remain == 0) {
-            ss << '.';
-            for (int i = 0; i < decimals.size(); i++) {
-                ss << decimals[i];
-            }
-            return ss.str();
+        string result;
+        llong n = numerator;
+        llong d = denominator;
+        if(n < 0 ^ d < 0 ) result+='-'; 
+        n = abs(n);
+        d = abs(d);
+        result += to_string(n / d);
+        llong r = n % d;
+        if (r == 0) {
+            return result;
         } else {
-            int k = 0;
-            for (k = 0; k < remains.size(); k++) {
-                if (remains[k] == remain) {
-                    break;
-                }
-            }
-            ss << '.';
-            for (int i = 0; i < k; i++) {
-                ss << decimals[i];
-            }
-            ss << '(';
-            for (int i = k; i < decimals.size(); i++) {
-                ss << decimals[i];
-            }
-            ss << ')';
-            return ss.str();
+            result += '.';
         }
+        unordered_map<int, int> map;
+        while (r != 0) {
+            if (map.find(r) != map.end()) {
+                result.insert(map[r], 1, '(');
+                result += ')';
+                break;
+            }
+            map[r] = result.size();
+            r *= 10;
+            result += to_string(r / d);
+            r %= d;
+        }
+        return result;
     }
 };
