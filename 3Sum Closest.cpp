@@ -4,26 +4,21 @@ public:
         sort(num.begin(), num.end());
         int size = num.size();
         int diff = INT_MAX;
-        int result = 0;
+        int result = num[0] + num[1] + num[2];
         for (int i = 0; i < size - 2; i++) {
             int j = i + 1;
             int k = size - 1;
-            int sum = target - num[i];
             while (j < k) {
-                int tmp = num[j] + num[k];
-                if (tmp == sum) {
+                int threesum = num[i] + num[j] + num[k];
+                if (threesum == target) {
                     return target;
-                } else {
-                    int tmp_diff = abs(tmp - sum);
-                    if (tmp_diff < diff) {
-                        result = num[i] + tmp;
-                        diff = tmp_diff;
-                    }
-                    if (tmp < sum) {
+                } else if (threesum < target) {
                         j++;
-                    } else {
-                        k--;
-                    }
+                } else {
+                    k--;
+                }
+                if (abs(threesum - target) < abs(result - target)) {
+                    result = threesum;
                 }
             }
         }
