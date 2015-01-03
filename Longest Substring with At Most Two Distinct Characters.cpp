@@ -1,3 +1,6 @@
+/*
+Solution _1: two pointers
+*/
 class Solution {
 public:
     int lengthOfLongestSubstringTwoDistinct(string s) {
@@ -27,5 +30,19 @@ public:
             }
         }
         return result;
+    }
+    
+    int lengthOfLongestSubstringTwoDistinct_1(string s) {
+        int start = 0, cnt = 0;
+        int char_set[256] = {0};
+        int ans = 0;
+        for (int i = 0; i < s.size(); i++) {
+            if (char_set[s[i]]++ == 0) cnt++;
+            while (cnt > 2) {
+                char_set[s[start]]--;
+                if (char_set[s[start++]] == 0) cnt--;
+            }
+            ans = max(i - start + 1, ans);
+        }
     }
 };
