@@ -18,6 +18,9 @@ public:
         while (idx < size && i < n) {
             buf[i++] = local[idx++];
         }
+        if (i == n) {
+            return n;
+        }
         while (n - i >= 4) {
             int cnt = read4(buf + i);
             i += cnt;
