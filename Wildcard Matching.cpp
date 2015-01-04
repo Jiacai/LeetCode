@@ -27,4 +27,28 @@ public:
             p++;
         return s[i] == '\0' && p[j] == '\0';
     }
+    
+    bool isMatch_1(const char *s, const char *p) {
+        const char *sBackup = NULL;
+        const char *pBackup = NULL;
+        while (*s != '\0') {
+            if (*s == *p || *p == '?') {
+                s++;
+                p++;
+            } else if (*p == '*') {
+                sBackup = s;
+                pBackup = p;
+                p++;
+            } else if (pBackup != NULL) {
+                p = pBackup + 1;
+                s = ++sBackup;
+            } else {
+                return false;
+            }
+        }
+        while (*p == '*') {
+            p++;
+        }
+        return *s == '\0' && *p == '\0';
+    }
 };
