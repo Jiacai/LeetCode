@@ -37,8 +37,7 @@ public:
                 p++;
             } else if (*p == '*') {
                 sBackup = s;
-                pBackup = p;
-                p++;
+                pBackup = p++;
             } else if (pBackup != NULL) {
                 p = pBackup + 1;
                 s = ++sBackup;
